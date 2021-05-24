@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Warn before pushing to protected branches
+# Make script executable with chmod +x pre-push
+# Bypass with git push --no-verify
+# Change default git hooks:
+# git config --global core.hooksPath /path/to/my/centralized/hooks
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+PROTECTED_BRANCHES="^(master|dev|release-*|patch-*)"
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]; then
+  read -p "[LOG] Are you sure you want to push to \"$BRANCH\" ? (y/n): " -n 1 -r < /dev/tty
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    exit 0
+  fi
+  echo "[ERR] Push aborted."
+  exit 1
+fi
+exit 0
