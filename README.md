@@ -14,7 +14,7 @@ Pre-push script: [pre-push](./my-git-hooks/hooks/pre-push) - will warn if pushin
 # Change default git hooks:
 # git config --global core.hooksPath /path/to/my/hooks
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-PROTECTED_BRANCHES="^(master|dev|release-*|patch-*)"
+PROTECTED_BRANCHES="^(master|main|dev|release-*|patch-*)"
 if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]; then
   read -p "[LOG] Are you sure you want to push to \"$BRANCH\" ? (y/n): " -n 1 -r < /dev/tty
   echo
